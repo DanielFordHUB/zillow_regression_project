@@ -79,7 +79,7 @@ def optimize_types(df):
 
 
 def mahalanobis(x=None, data=None, cov=None):
-
+    '''Mahalanobis distance is an effective multivariate distance metric that measures the distance between a point (vector) and a distribution.'''
     x_mu = x - np.mean(data)
     if not cov:
         cov = np.cov(data.values.T)
@@ -152,36 +152,3 @@ def train_test_validate_split(df, test_size=.2, validate_size=.3, random_state=9
     return train, test, validate
 
 
-def MM_scale_zillow(train, validate, test):
-    '''
-    This takes in the train, validate, and test dataframes, as well as the target label. 
-    It then fits a scaler object to the train sample based on the given sample_type, applies that
-    scaler to the train, validate, and test samples, and appends the new scaled data to the 
-    dataframes as additional columns with the prefix 'scaled_'. 
-    train, validate, and test dataframes are returned, in that order. 
-    '''
-    target = 'taxvalue'
-    
-    # identify quantitative features to scale
-    quant_features = [col for col in train.columns if (train[col].dtype != 'object') & (col != target)]
-    
-    # establish empty dataframes for storing scaled dataset
-    train_scaled = train.copy()
-    validate_scaled = validate.copy()
-    test_scaled = test.copy()
-    
-    # create and fit the scaler
-    scaler = MinMaxScaler().fit(train[quant_features])
-    
-    # adding scaled features to scaled dataframes
-    train_scaled[quant_features] = scaler.transform(train[quant_features])
-    validate_scaled[quant_features] = scaler.transform(validate[quant_features])
-    test_scaled[quant_features] = scaler.transform(test[quant_features])
-   
-
-    return train_scaled, validate_scaled, test_scaled
-
-## ~~ TODO Encode categorical variables (and FIPS is a category so Fips to string to one-hot-encoding ~~
-## TODO Scale numeric columns
-## TODO Add train/validate/test split in here
-## TODO How to handle 0 bedroom, 0 bathroom homes? Drop them? How many? They're probably clerical nulls

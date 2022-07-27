@@ -66,16 +66,18 @@ to reproduce this project you will need to:
 
 ## Key Items
 
-
+- The Polynomial Regressor model beat the Baseline by **20.56%**
+- Square footage, number of beds and baths, and year built were all significant predictors of home value, with lot size to a lesser extent
 
 ## Recomendations
 
+- As the model was 20% better, I would recommend immediate implementation, while still continuing to gather more data for better modeling.
 
+## What's Next?
 
-## Next Steps
+- **Collect more data:** We can refine our modeling by looking at other important factors such as general location (urban, suburban, rural), distance from schools and city centers, crime statistics, and more.
 
-With more time I would like to gather more data on regional and economic status, as well as test additional models with more features. with this additional time we should hopefully be able to increase our accuracy to an even higher amount.
-
+- **Deeper analysis:** With more time I would be able to test and visualize more relational variables, aand through that improvement on feature selection and engineerig
 
 
 
