@@ -55,12 +55,25 @@ def handle_nulls(df):
 
 def optimize_types(df):
     # Convert some columns to integers
-    # fips, yearbuilt, and bedrooms can be integers
-    df["fips"] = df["fips"].astype(int)
+    # yearbuilt, and bedrooms can be integers
     df["year_built"] = df["year_built"].astype(int)
     df["bedrooms"] = df["bedrooms"].astype(int)    
     df["tax_value"] = df["tax_value"].astype(int)
     df["sq_ft"] = df["sq_ft"].astype(int)
+    df['lot_size'] = df['lot_size'].astype(int)
+    
+    #df['fips'] = df.fips.apply(lambda fips: '0' + str(int(fips)))
+    # Turn fips to obj
+    df['fips'] = df['fips'].astype(str)
+    # Encode fips
+    dummy_df = pd.get_dummies(df[['fips']], dummy_na=False)
+
+    df = pd.concat([df, dummy_df], axis=1)
+    
+    #drop fips
+    df = df.drop(['fips'], axis = 1)
+    # rename fips
+    df = df.rename(columns = {'fips_6037.0': 'LA', 'fips_6059.0':'orange', 'fips_6111.0': 'ventura'})
     
     return df
 
@@ -110,9 +123,9 @@ def wrangle_zillow():
 
     df = handle_nulls(df)
 
-    df = optimize_types(df)
-
     df = remove_outliers(df)
+
+    df = optimize_types(df)
 
     df.to_csv("zillow.csv", index=False)
 

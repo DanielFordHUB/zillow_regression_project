@@ -59,3 +59,8 @@ def plot_categorical_and_continuous_vars(df):
                               y=cont_var,
                               data=df)
             plt.show()
+            
+            
+def joint(x, y, df):
+    sns.jointplot(x = x, y = y, data = df, kind = 'reg',
+                  joint_kws = {'line_kws':{'color':'orange'}});
